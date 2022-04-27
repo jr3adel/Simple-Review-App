@@ -1,7 +1,15 @@
-FROM python:3
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-WORKDIR /code
-COPY requirements.txt /code/
+FROM alpine
+
+LABEL maintainer="sashsadel@gmail.com"
+
+COPY . /src
+
+WORKDIR /src
+
 RUN pip install -r requirements.txt
-COPY . /code/
+
+EXPOSE 8000
+
+ENTRYPOINT ["python","./manage.py"]
+
+
