@@ -13,7 +13,7 @@ pipeline {
         stage('Build')
         {
             steps {
-                sh 'docker build -t saeedadel/simpleapp:latest .'
+                sh 'sudo docker build -t saeedadel/simpleapp:latest .'
             }
         }
         stage ('Login')
