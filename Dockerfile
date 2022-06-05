@@ -1,15 +1,23 @@
-FROM alpine
+FROM python:3.9.13-slim-buster
 
-LABEL maintainer="sashsadel@gmail.com"
+LABEL maintainer_name="Saeed Adel " maintainer_email="sashsadel@gmail.com" 
 
-COPY . /src
+WORKDIR / 
 
-WORKDIR /src
+COPY ./requirements.txt /requirements.txt
 
-RUN pip install -r requirements.txt
+RUN pip3 install -r requirements.txt
 
-EXPOSE 8000
+RUN mkdir /app
 
-ENTRYPOINT ["python","./manage.py"]
+WORKDIR /app 
+
+COPY . . 
+
+RUN python manage.py makemigrations 
+
+RUN python manage.py migrate
+
+CMD python manage.py runserver 0.0.0.0:8000 
 
 
