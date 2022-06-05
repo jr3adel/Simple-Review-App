@@ -1,0 +1,39 @@
+pipeline {
+    agent {label 'jenkins-slave'}
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentails('DockerHub')
+    }
+    stages {
+        stage('Cloning') {
+            steps {
+                git 'https://github.com/jr3adel/Simple-Review-App.git'
+            }
+        }
+        stage('Build')
+        {
+            steps {
+                sh 'docker build -t saeedadel/simpleapp:latest .'
+            }
+        }
+        stage ('login')
+        {
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage ('push')
+        {
+            steps {
+                sh 'docker push saeedadel/simpleapp:latest'
+            }
+        }
+    }
+
+    post {
+        always {
+            
+            sh 'docker logout'
+        }
+    }
+}
