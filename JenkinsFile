@@ -2,7 +2,7 @@ pipeline {
     agent {label 'jenkins-slave'}
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentails('DockerHub')
+        DOCKERHUB_CREDENTIALS = credentials('DockerHub')
     }
     stages {
         stage('Cloning') {
